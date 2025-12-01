@@ -1,8 +1,10 @@
 import User from "../models/user.model.js";
-import "dotenv/config";
-import { storeRefreshToken } from "../lib/redis.js";
+import jwt from "jsonwebtoken";
+import { storeRefreshToken, deleteRefreshToken } from "../lib/redis.js";
 import { generateTokens } from "../lib/generateTokens.js";
 import { setCookies } from "../lib/cookies.js";
+
+import "dotenv/config";
 
 export const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -30,4 +32,23 @@ export const signup = async (req, res) => {
   }
 };
 export const login = async (req, res) => {};
-export const logout = async (req, res) => {};
+export const logout = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      const decoded = jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET
+      );
+
+      await deleteRefreshToken(decoded.userId);
+
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
+
+      res.json({ message: "Logout Successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};

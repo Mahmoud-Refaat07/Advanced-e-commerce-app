@@ -13,3 +13,7 @@ export const storeRefreshToken = async (userId, refreshToken) => {
     { ex: 7 * 24 * 60 * 60 } // 7 days expiration
   );
 };
+
+export const deleteRefreshToken = async (userId) => {
+  await redis.del(`refresh_token:${userId}`);
+};
