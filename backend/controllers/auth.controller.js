@@ -1,42 +1,8 @@
 import User from "../models/user.model.js";
-import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { redis } from "../lib/redis.js";
-
-const generateTokens = (userId) => {
-  const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m",
-  });
-  const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "7d",
-  });
-
-  return { accessToken, refreshToken };
-};
-
-const storeRefreshToken = async (userId, refreshToken) => {
-  await redis.set(
-    `refresh_token:${userId}`,
-    refreshToken,
-    { ex: 7 * 24 * 60 * 60 } // 7 days expiration
-  );
-};
-
-const setCookies = (res, accessToken, refreshToken) => {
-  res.cookie("accessToken", accessToken, {
-    httpOnly: true, // prevent XSS attacks, cross site scripting attack
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict", // prevent CSRF attacks, cross-site request frogery attack
-    maxAge: 15 * 60 * 1000, // 15min
-  });
-
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true, // prevent XSS attacks, cross site scripting attack
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict", // prevent CSRF attacks, cross-site request frogery attack
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 15min
-  });
-};
+import { storeRefreshToken } from "../lib/redis.js";
+import { generateTokens } from "../lib/generateTokens.js";
+import { setCookies } from "../lib/cookies.js";
 
 export const signup = async (req, res) => {
   const { name, email, password } = req.body;
