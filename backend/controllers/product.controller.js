@@ -48,17 +48,16 @@ export const createProduct = async (req, res) => {
       cloudinaryResponse = await cloudinary.upload(image, {
         folder: "products",
       });
-
-      const product = await Product.create({
-        name,
-        description,
-        price,
-        image: cloudinaryResponse?.secure_url
-          ? cloudinaryResponse.secure_url
-          : "",
-        category,
-      });
     }
+    const product = await Product.create({
+      name,
+      description,
+      price,
+      image: cloudinaryResponse?.secure_url
+        ? cloudinaryResponse.secure_url
+        : "",
+      category,
+    });
     res.status(201).json({ message: "Product created successfully", product });
   } catch (error) {
     console.log("Error in createProduct endpoint " + error.message);
@@ -116,6 +115,7 @@ export const getProductsByCategory = async (req, res) => {
   const { category } = req.params;
   try {
     const products = await Product.find({ category });
+    res.json(products);
   } catch (error) {}
   console.log("Error in getProductsByCategory endpoint " + error.message);
   res.status(500).json({ message: "Server Error", error: error.message });
