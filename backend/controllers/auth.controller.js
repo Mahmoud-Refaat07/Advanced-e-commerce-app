@@ -1,10 +1,6 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import {
-  storeRefreshToken,
-  deleteRefreshToken,
-  storedToken,
-} from "../lib/redis.js";
+import { storeRefreshToken, deleteRefreshToken } from "../lib/redis.js";
 import { generateTokens } from "../lib/generateTokens.js";
 import { setCookies } from "../lib/cookies.js";
 import { redis } from "../lib/redis.js";

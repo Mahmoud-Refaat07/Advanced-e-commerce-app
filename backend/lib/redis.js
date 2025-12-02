@@ -17,7 +17,3 @@ export const storeRefreshToken = async (userId, refreshToken) => {
 export const deleteRefreshToken = async (userId) => {
   return redis.del(`refresh_token:${userId}`);
 };
-
-export const storedToken = async (userId) => {
-  return await redis.get(`refresh_token:${userId}`);
-};
