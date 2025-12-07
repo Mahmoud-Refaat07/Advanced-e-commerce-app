@@ -7,6 +7,7 @@ import cartRoutes from "./routes/cart.route.js";
 import couponRoutes from "./routes/coupon.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import analyticsRoutes from "./routes/analytics.route.js";
+import cors from "cors";
 
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
@@ -14,6 +15,10 @@ dotenv.config({ path: "../.env" });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(cors(), {
+  origin: "http://localhost:5173",
+  credentials: true,
+});
 app.use(express.json());
 app.use(cookieParser());
 
