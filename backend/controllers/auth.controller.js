@@ -8,11 +8,15 @@ import { redis } from "../lib/redis.js";
 import "dotenv/config";
 
 export const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, confirmPassword } = req.body;
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: "User Already Exists" });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Password Error" });
     }
 
     const user = await User.create({
