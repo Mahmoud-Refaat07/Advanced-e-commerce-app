@@ -1,8 +1,9 @@
 import { UserPlus, ArrowRight, Loader } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
+import useAuthStore from "../store/authStore";
 
 const SignUpPage = () => {
   const loading = false;
@@ -13,8 +14,15 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { user, signup } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const api = await signup(formData);
+    if (api.success) {
+      navigate("/");
+    }
   };
 
   return (
@@ -57,7 +65,7 @@ const SignUpPage = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              placeholder="Johndoe@gmail.com"
+              placeholder="Johndoe@example.com"
               icon="email"
             />
             <Input
@@ -91,12 +99,13 @@ const SignUpPage = () => {
               disabled={loading}
             >
               {loading ? (
-                <Loader
-                  className="mr-2 h-5 w-5 animate-spin"
-                  aria-hidden="true"
-                >
+                <>
+                  <Loader
+                    className="mr-2 h-5 w-5 animate-spin"
+                    aria-hidden="true"
+                  />
                   Loading...
-                </Loader>
+                </>
               ) : (
                 <>
                   <UserPlus className="mr-2 h-5 w-5" aria-hidden="true" />
@@ -108,7 +117,7 @@ const SignUpPage = () => {
           <p className="mt-8 text-center text-sm text-gray-300">
             Already have an account?{" "}
             <Link
-              to="login"
+              to="/login"
               className="text-meduim text-emerald-400 hover:text-emerald-300"
             >
               Login Here <ArrowRight className="inline h-4 w-4" />

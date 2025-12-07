@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 // Pages
 import HomePage from "./pages/HomePage";
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
+      <Toaster />
     </div>
   );
 };
