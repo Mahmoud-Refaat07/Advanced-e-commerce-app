@@ -3,10 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
-import useAuthStore from "../store/authStore";
+import useUserStore from "../store/useUserStore";
 
 const SignUpPage = () => {
-  const loading = false;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,7 +13,7 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
-  const { user, signup } = useAuthStore();
+  const { user, signup, isLoading } = useUserStore();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -96,9 +95,9 @@ const SignUpPage = () => {
 							rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600
 							 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2
 							  focus:ring-emerald-500 transition duration-150 ease-in-out disabled:opacity-50 "
-              disabled={loading}
+              disabled={isLoading}
             >
-              {loading ? (
+              {isLoading ? (
                 <>
                   <Loader
                     className="mr-2 h-5 w-5 animate-spin"
