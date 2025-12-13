@@ -48,6 +48,7 @@ const useUserStore = create((set, get) => ({
       set({ user: response.data, checkingAuth: false });
     } catch (error) {
       set({ checkingAuth: false, user: null });
+      toast.error("Unauthorized");
     }
   },
 
