@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface Props {
   item: {
@@ -9,7 +10,12 @@ interface Props {
 }
 const CategoryItem = ({ item }: Props) => {
   return (
-    <div className="relative overflow-hidden h-96 w-full rounded-lg group">
+    <motion.div
+      className="relative overflow-hidden h-96 w-full rounded-lg group"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5, duration: 0.8 }}
+    >
       <Link to={"/category" + item.href}>
         <div className="w-full h-full cursor-pointer">
           <div className="absolute inset-0 bg-linear-to-b from-transparent to-gray-900/50">
@@ -28,7 +34,7 @@ const CategoryItem = ({ item }: Props) => {
           </div>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 };
 
