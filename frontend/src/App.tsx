@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 
 const App = () => {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -39,6 +40,16 @@ const App = () => {
           <Route
             path="/login"
             element={!user ? <LoginPage /> : <Navigate to="/" />}
+          />{" "}
+          <Route
+            path="/secret-dashboard"
+            element={
+              user?.role === "admin" ? (
+                <AdminDashboardPage />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
         </Routes>
       </div>

@@ -1,4 +1,11 @@
-import { Mail, User, Lock } from "lucide-react";
+import {
+  Mail,
+  User,
+  Lock,
+  ArrowRight,
+  ArrowBigDownDashIcon,
+  ArrowLeftCircle,
+} from "lucide-react";
 
 interface Props {
   label: string;
@@ -6,8 +13,8 @@ interface Props {
   type: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  placeholder: string;
-  icon: string;
+  placeholder?: string;
+  icon?: string;
 }
 
 const Input = ({
@@ -32,17 +39,17 @@ const Input = ({
             <Mail className="h-5 w-5 text-gray-400" />
           ) : icon === "password" ? (
             <Lock className="h-5 w-5 text-gray-400" />
-          ) : (
-            ""
-          )}
+          ) : null}
         </div>
         <input
           id={id}
           type={type}
           value={value}
           onChange={onChange}
-          className="block w-full px-3 py-2 pl-10 bg-gray-700 border border-gray-600 rounded-md shadow-sm
-          placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+          className={`block w-full px-3 py-2 ${
+            icon ? "pl-10" : ""
+          } bg-gray-700 border border-gray-600 rounded-md shadow-sm
+          placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm`}
           placeholder={placeholder}
           required
         />
