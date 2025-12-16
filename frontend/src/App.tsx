@@ -12,6 +12,8 @@ import NavBar from "./components/NavBar";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import CategoryPage from "./pages/CategoryPage";
+import { useProductStore } from "./store/useProductStore";
 
 const App = () => {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -51,6 +53,7 @@ const App = () => {
               )
             }
           />
+          <Route path="/category/:category" element={<CategoryPage />} />
         </Routes>
       </div>
       <Toaster />
