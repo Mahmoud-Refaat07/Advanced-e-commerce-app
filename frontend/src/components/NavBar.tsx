@@ -1,10 +1,13 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import useUserStore from "../store/useUserStore";
+import useCartStore from "../store/useCartStore";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const { user, logout } = useUserStore();
+  const { cart } = useCartStore();
+  console.log(cart);
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
@@ -47,7 +50,7 @@ const NavBar = () => {
                   className="absolute -top-3 -left-2 bg-emerald-500 text-white rounded-full px-2
               py-0.5 text-xs group-hover:bg-emerald-400 transition duration-300 ease-in-out"
                 >
-                  3
+                  {cart.length}
                 </span>
               </Link>
             )}
