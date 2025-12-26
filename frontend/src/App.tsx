@@ -14,13 +14,23 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import CategoryPage from "./pages/CategoryPage";
 import { useProductStore } from "./store/useProductStore";
+import useCartStore from "./store/useCartStore";
+import CartPage from "./pages/CartPage";
 
 const App = () => {
   const { user, checkAuth, checkingAuth } = useUserStore();
+  const { cart, getCartItems } = useCartStore();
+  console.log(cart);
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      getCartItems();
+    }
+  }, [getCartItems]);
 
   if (checkingAuth) return <LoadingSpinner />;
   return (
@@ -54,6 +64,7 @@ const App = () => {
             }
           />
           <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/cart" element={!user ? <HomePage /> : <CartPage />} />
         </Routes>
       </div>
       <Toaster />
