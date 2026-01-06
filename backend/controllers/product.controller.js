@@ -103,8 +103,8 @@ export const getRecommendatedProduct = async (req, res) => {
           price: 1,
         },
       },
-      res.json(products),
     ]);
+    res.json(products);
   } catch (error) {
     console.log("Error in getRecommendatedProduct endpoint " + error.message);
     res.status(500).json({ message: "Server Error", error: error.message });
