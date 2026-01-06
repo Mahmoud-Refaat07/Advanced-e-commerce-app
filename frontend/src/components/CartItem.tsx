@@ -1,5 +1,6 @@
 import { Minus, Plus, Trash } from "lucide-react";
 import useCartStore from "../store/useCartStore";
+import OrderSummary from "./OrderSummary";
 
 interface Cart {
   _id: string;
@@ -23,7 +24,10 @@ const CartItem = ({ item }: CartItemProps) => {
     <div className="rounded-lg border p-4 shadow-sm border-gray-700 bg-gray-800 md:p-6">
       <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
         <div className="shrink-0 md:order-1">
-          <img className="h-20 md:h-32 rounded object-cover" src={item.image} />
+          <img
+            className="h-20 md:h-32 md:w-50 rounded object-cover"
+            src={item.image}
+          />
         </div>
         <label className="sr-only">Choose quantity:</label>
 

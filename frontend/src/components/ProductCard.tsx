@@ -3,12 +3,8 @@ import { ShoppingCart } from "lucide-react";
 import useUserStore from "../store/useUserStore";
 import useCartStore from "../store/useCartStore";
 
-interface ProductProps {
-  name: string;
-  category: string;
-  image: string;
-  price: number;
-}
+import type { ProductProps } from "../lib/types";
+
 const ProductCard = ({ product }: { product: ProductProps }) => {
   const { user } = useUserStore();
   const { addToCart } = useCartStore();

@@ -5,6 +5,7 @@ import axiosInstance from "../lib/axios";
 export const useProductStore = create((set) => ({
   products: [],
   loading: false,
+  recommedations: [],
   setProducts: (products) => set({ products }),
 
   createProduct: async (productData) => {
@@ -86,6 +87,20 @@ export const useProductStore = create((set) => ({
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message || "Failed to switch featured");
+    }
+  },
+
+  getRecommendedProducts: async () => {
+    set({ loading: true });
+    try {
+      const response = await axiosInstance.get("/products/recommedations");
+      set({ recommedations: response.data, loading: false });
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(
+        error.response.data.message || "Failed to fetch recommedations"
+      );
+      set({ loading: false });
     }
   },
 }));
