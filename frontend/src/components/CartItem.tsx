@@ -1,16 +1,15 @@
 import { Minus, Plus, Trash } from "lucide-react";
-import useCartStore from "../store/useCartStore";
-import OrderSummary from "./OrderSummary";
+import useCartStore from "../store/useCartStore.ts";
 
 interface Cart {
   _id: string;
-  category: string;
-  description: string;
-  image: string;
+  category?: string;
+  description?: string;
+  image?: string;
   name: string;
   price: number;
   quantity: number;
-  isFeatured: boolean;
+  isFeatured?: boolean;
 }
 
 interface CartItemProps {

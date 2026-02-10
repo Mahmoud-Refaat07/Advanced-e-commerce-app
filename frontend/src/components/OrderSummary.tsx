@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import useCartStore from "../store/useCartStore";
+import useCartStore from "../store/useCartStore.ts";
 import { Link } from "react-router-dom";
 import { MoveRight } from "lucide-react";
 // import { loadStripe } from "@stripe/stripe-js";
-import axiosInstance from "../lib/axios";
+import axiosInstance from "../lib/axios.ts";
 
 // const stripePromise = loadStripe(
 //   "pk_test_51Saev9JxQlWOfYElfP21lfeiXYytR2y0WNZKjfYXDUxpUcjKGga8ED5qvL1pRlyfE5bIjBXl7wLMsXgYg6p694uL00a0JjKfmR"
@@ -25,7 +25,7 @@ const OrderSummary = () => {
         {
           products: cart,
           coupon: coupon ? coupon.code : null,
-        }
+        },
       );
 
       const session = response.data;

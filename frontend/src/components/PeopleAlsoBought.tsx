@@ -1,8 +1,7 @@
-import ProductCard from "./ProductCard";
-import { useProductStore } from "../store/useProductStore";
 import { useEffect } from "react";
+import { useProductStore } from "../store/useProductStore.ts";
 
-import type { ProductProps } from "../lib/types";
+import ProductCard from "./ProductCard";
 import LoadingSpinner from "./LoadingSpinner";
 
 const PeopleAlsoBought = () => {
@@ -20,8 +19,15 @@ const PeopleAlsoBought = () => {
         <LoadingSpinner />
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {recommedations.map((product: ProductProps) => (
-            <ProductCard key={product._id} product={product} />
+          {recommedations.map((product) => (
+            <ProductCard
+              key={product._id}
+              product={{
+                ...product,
+                quantity: 1,
+                price: Number(product.price),
+              }}
+            />
           ))}
         </div>
       )}

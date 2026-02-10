@@ -1,9 +1,18 @@
 import toast from "react-hot-toast";
 import { ShoppingCart } from "lucide-react";
-import useUserStore from "../store/useUserStore";
-import useCartStore from "../store/useCartStore";
+import useUserStore from "../store/useUserStore.ts";
+import useCartStore from "../store/useCartStore.ts";
 
-import type { ProductProps } from "../lib/types";
+interface ProductProps {
+  _id: string;
+  category?: string;
+  description?: string;
+  image?: string;
+  name: string;
+  price: number;
+  quantity: number;
+  isFeatured?: boolean;
+}
 
 const ProductCard = ({ product }: { product: ProductProps }) => {
   const { user } = useUserStore();

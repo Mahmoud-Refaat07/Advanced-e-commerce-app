@@ -3,19 +3,8 @@ import EmptyCartUI from "../components/EmptyCartUI";
 import GiftCouponCard from "../components/GiftCouponCard";
 import OrderSummary from "../components/OrderSummary";
 import PeopleAlsoBought from "../components/PeopleAlsoBought";
-import useCartStore from "../store/useCartStore";
+import useCartStore from "../store/useCartStore.ts";
 import { motion } from "framer-motion";
-
-interface Cart {
-  _id: string;
-  category: string;
-  description: string;
-  image: string;
-  name: string;
-  price: number;
-  quantity: number;
-  isFeatured: boolean;
-}
 
 const CartPage = () => {
   const { cart } = useCartStore();
@@ -34,7 +23,7 @@ const CartPage = () => {
               <EmptyCartUI />
             ) : (
               <div className="space-y-6">
-                {cart.map((item: Cart) => (
+                {cart.map((item) => (
                   <CartItem key={item._id} item={item} />
                 ))}
               </div>

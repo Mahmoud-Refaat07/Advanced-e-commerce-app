@@ -1,8 +1,37 @@
 import { create } from "zustand";
 import { toast } from "react-hot-toast";
-import axiosInstance from "../lib/axios";
+import axiosInstance from "../lib/axios.ts";
 
-const useCartStore = create((set, get) => ({
+export interface CartItem {
+  _id: string;
+  category?: string;
+  description?: string;
+  image?: string;
+  name: string;
+  price: number;
+  quantity: number;
+  isFeatured?: boolean;
+}
+
+export interface Coupon {
+  discountPercentage: number;
+  code: string;
+}
+
+interface CartStore {
+  cart: CartItem[];
+  coupon: Coupon | null;
+  total: number;
+  subtotal: number;
+  isCouponApplied: boolean;
+  getCartItems: () => Promise<void>;
+  addToCart: (product: CartItem) => Promise<void>;
+  removeFromCart: (productId: string) => Promise<void>;
+  updateQuantity: (productId: string, quantity: number) => Promise<void>;
+  calculateTotals: () => void;
+}
+
+const useCartStore = create<CartStore>((set, get) => ({
   cart: [],
   coupon: null,
   total: 0,
@@ -11,13 +40,14 @@ const useCartStore = create((set, get) => ({
 
   getCartItems: async () => {
     try {
-      const response = await axiosInstance.get("/cart");
+      const response = await axiosInstance.get<CartItem[]>("/cart");
       set({ cart: response.data });
       get().calculateTotals();
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       set({ cart: [] });
-      console.log(error.response.data.message || "An error occurred");
-      toast.error(error.response.data.message || "An error occurred");
+      console.log(error.response?.data?.message || "An error occurred");
+      toast.error(error.response?.data?.message || "An error occurred");
     }
   },
 
@@ -29,13 +59,13 @@ const useCartStore = create((set, get) => ({
 
       set((prevState) => {
         const existingItem = prevState.cart.find(
-          (item) => item._id === product._id
+          (item) => item._id === product._id,
         );
         const newCart = existingItem
           ? prevState.cart.map((item) =>
               item._id === product._id
                 ? { ...item, quantity: item.quantity + 1 }
-                : item
+                : item,
             )
           : [...prevState.cart, { ...product, quantity: 1 }];
         return { cart: newCart };
@@ -43,9 +73,10 @@ const useCartStore = create((set, get) => ({
 
       toast.success("Product added to cart");
       get().calculateTotals();
-    } catch (error) {
-      console.log(error.response.data.message || "An error occurred");
-      toast.error(error.response.data.message || "An error occurred");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error.response?.data?.message || "An error occurred");
+      toast.error(error.response?.data?.message || "An error occurred");
     }
   },
 
@@ -65,7 +96,7 @@ const useCartStore = create((set, get) => ({
     await axiosInstance.put(`/cart/${productId}`, { quantity });
     set((prevState) => ({
       cart: prevState.cart.map((item) =>
-        item._id === productId ? { ...item, quantity } : item
+        item._id === productId ? { ...item, quantity } : item,
       ),
     }));
     get().calculateTotals();
@@ -75,7 +106,7 @@ const useCartStore = create((set, get) => ({
     const { cart, coupon } = get();
     const subtotal = cart.reduce(
       (sum, item) => sum + item.price * item.quantity,
-      0
+      0,
     );
     let total = subtotal;
 

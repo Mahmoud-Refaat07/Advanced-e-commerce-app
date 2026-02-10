@@ -1,21 +1,9 @@
-import { useEffect } from "react";
-import { useProductStore } from "../store/useProductStore";
+import { useProductStore } from "../store/useProductStore.ts";
 import { motion } from "framer-motion";
 import { Star, Trash } from "lucide-react";
 
-interface Product {
-  _id: string;
-  description: string;
-  image: string;
-  name: string;
-  price: number;
-  category: string;
-  isFeatured: boolean;
-}
-
 const ProductsList = () => {
-  const { loading, products, deleteProduct, toggleFeaturedProduct } =
-    useProductStore();
+  const { products, deleteProduct, toggleFeaturedProduct } = useProductStore();
 
   console.log("UI products", products);
 
@@ -60,7 +48,7 @@ const ProductsList = () => {
           </tr>
         </thead>
         <tbody className="bg-gray-800 divide-y divide-gray-700">
-          {products.map((product: Product) => (
+          {products.map((product) => (
             <tr key={product._id} className="hover:bg-gray-700">
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">

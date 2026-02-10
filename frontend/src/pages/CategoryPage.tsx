@@ -1,21 +1,17 @@
 import { useParams } from "react-router-dom";
-import { useProductStore } from "../store/useProductStore";
+import { useProductStore } from "../store/useProductStore.ts";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import ProductCard from "../components/ProductCard";
-interface ProductProps {
-  _id: string;
-  name: string;
-  category: string;
-  image: string;
-  price: number;
-}
+
 const CategoryPage = () => {
-  const { category } = useParams();
+  const { category } = useParams<{ category: string }>();
   const { products, getProductByCategory } = useProductStore();
 
   useEffect(() => {
-    getProductByCategory(category);
+    if (category) {
+      getProductByCategory(category);
+    }
   }, [category, getProductByCategory]);
 
   return (
@@ -40,7 +36,7 @@ const CategoryPage = () => {
               No Prodcuts Found
             </h2>
           )}
-          {products.map((product: ProductProps) => (
+          {products.map((product) => (
             <ProductCard product={product} key={product._id} />
           ))}
         </motion.div>

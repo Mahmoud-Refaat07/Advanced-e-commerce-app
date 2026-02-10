@@ -2,7 +2,15 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
 import Input from "./Input";
-import { useProductStore } from "../store/useProductStore";
+import { useProductStore } from "../store/useProductStore.ts";
+
+interface productType {
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+}
 
 const categories = [
   "jeans",
@@ -15,10 +23,10 @@ const categories = [
 ];
 
 const CreateProductForm = () => {
-  const [newProduct, setNewProduct] = useState({
+  const [newProduct, setNewProduct] = useState<productType>({
     name: "",
     description: "",
-    price: "",
+    price: 0,
     category: "",
     image: "",
   });
@@ -87,9 +95,12 @@ const CreateProductForm = () => {
             label="Price"
             id="price"
             type="number"
-            value={newProduct.price}
+            value={newProduct.price.toString()}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, price: e.target.value })
+              setNewProduct({
+                ...newProduct,
+                price: parseFloat(e.target.value),
+              })
             }
           />
         </div>

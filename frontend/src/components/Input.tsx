@@ -1,11 +1,4 @@
-import {
-  Mail,
-  User,
-  Lock,
-  ArrowRight,
-  ArrowBigDownDashIcon,
-  ArrowLeftCircle,
-} from "lucide-react";
+import { Mail, User, Lock } from "lucide-react";
 
 interface Props {
   label: string;

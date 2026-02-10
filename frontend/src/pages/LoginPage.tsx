@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
-import useUserStore from "../store/useUserStore";
+import useUserStore from "../store/useUserStore.ts";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({

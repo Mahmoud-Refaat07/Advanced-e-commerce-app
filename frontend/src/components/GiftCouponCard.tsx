@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import useCartStore from "../store/useCartStore";
+import useCartStore from "../store/useCartStore.ts";
 
 const GiftCouponCard = () => {
   const [userInputCode, setUserInputCode] = useState<string | number>();
