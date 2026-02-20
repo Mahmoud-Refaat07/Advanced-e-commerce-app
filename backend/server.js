@@ -1,3 +1,5 @@
+console.log("Server file loaded...");
+
 import express from "express";
 import connectDatabase from "./lib/db.js";
 import cookieParser from "cookie-parser";
@@ -41,7 +43,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
   });
 }
-
+console.log("About to start server...");
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   connectDatabase();

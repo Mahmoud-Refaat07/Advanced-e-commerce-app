@@ -28,7 +28,7 @@ export const getFeaturedProducts = async (req, res) => {
     }
 
     // store in redis for future quick access
-    await redis.set("featured_products", JSON.stringify(featuredProducts));
+    // await redis.set("featured_products", JSON.stringify(featuredProducts));
 
     res.json(featuredProducts);
   } catch (error) {
@@ -133,7 +133,7 @@ export const toggleFeaturedProduct = async (req, res) => {
         const featuredProducts = await Product.find({
           isFeatured: true,
         }).lean();
-        await redis.set("featured_products", JSON.stringify(featuredProducts));
+        // await redis.set("featured_products", JSON.stringify(featuredProducts));
       } catch (error) {
         console.log("error in update cache");
       }
