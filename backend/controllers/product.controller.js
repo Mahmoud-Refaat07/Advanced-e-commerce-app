@@ -116,9 +116,10 @@ export const getProductsByCategory = async (req, res) => {
   try {
     const products = await Product.find({ category });
     res.json(products);
-  } catch (error) {}
-  console.log("Error in getProductsByCategory endpoint " + error.message);
-  res.status(500).json({ message: "Server Error", error: error.message });
+  } catch (error) {
+    console.log("Error in getProductsByCategory endpoint " + error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
 };
 
 export const toggleFeaturedProduct = async (req, res) => {
