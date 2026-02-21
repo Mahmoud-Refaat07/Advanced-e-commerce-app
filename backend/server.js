@@ -21,7 +21,17 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "https://e-commerce-store-smoky-xi.vercel.app",
+        "https://e-commerce-store-mfxdampv8-mahmouds-projects-0253299a.vercel.app",
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
