@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 
 console.log("About to start server...");
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
   connectDatabase();
 });
