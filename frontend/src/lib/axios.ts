@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://advanced-e-commerce-app-production.up.railway.app/api",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
   withCredentials: true,
 });
 
