@@ -34,10 +34,10 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["customer", "admin"],
-      default: "customer",
+      default: "admin",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Pre-save hook to hash password before saving to database
