@@ -79,6 +79,10 @@ const useUserStore = create<UserStore>((set) => ({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error: unknown) {
       set({ checkingAuth: false, user: null });
+      console.log(
+        "Auth check failed:",
+        (error as AxiosError<{ message: string }>).message,
+      );
     }
   },
 
